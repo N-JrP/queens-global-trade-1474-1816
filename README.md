@@ -1,151 +1,239 @@
-# 👑 Queens Global Trade Explorer (1474–1816)
+👑 Queens Global Trade Explorer (1474–1816)
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Streamlit-ff4b4b?logo=streamlit&logoColor=white)](https://queens-global-trade-1474-1816-mrfblbggqimo7dow5urzgo.streamlit.app/)
 
-**Early Modern Global Trade Governance (15th–19th century)**  
-A digital humanities prototype combining structured historical data, interactive filtering, and governance-overlap visualization.
 
----
 
-## 🌍 Project Overview
+🌍 Early Modern Global Trade Governance (15th–19th Century)
 
-This project transforms narrative historical information about queens and trade systems into a structured dataset and interactive analytical interface.
+A digital humanities prototype combining:
 
-It demonstrates how historical governance, maritime orientation, and trade infrastructure can be modeled computationally and explored dynamically.
+Structured historical datasets
 
-The system includes:
+Interactive governance analytics
 
-- A Streamlit data explorer
-- A Comparative governance module
-- A Temporal overlap visualization
-- An optional interactive trade corridor map (Folium)
+Comparative institutional modeling
 
----
+Geospatial trade network visualization
 
-## 🔎 Key Features
+This project transforms historical narrative into computational infrastructure.
 
-### 👑 Royal Council Filtering
-- Free-text global search
-- Structured filtering (maritime power, empire, region)
-- Persona-based queen selection
-- Story Mode vs Evidence Mode toggle
+🚀 Live Project Access
+🔴 Streamlit Governance Explorer
 
-### 📜 Queen Dossier View
-- Trade regions
-- Key ports
-- Major exports
-- Trade partners
-- Policy keywords
-- Economic impact summary
+Explore the full analytical interface:
 
-### ⚖️ Structural Comparison Engine
-Compare two rulers:
-- Shared trade regions
-- Shared ports
-- Shared exports
-- Unique governance domains
-
-### 🧭 Trade Governance Timeline
-Visualizes how many rulers were active per year (1474–1816), including maritime dominance comparison.
-
-This functions as a governance-intensity proxy, not trade volume.
-
----
-
-## 🗺️ Interactive Trade Map (Optional Module)
-
-Built with Folium.
+👉 https://queens-global-trade-1474-1816-mrfblbggqimo7dow5urzgo.streamlit.app/
 
 Features:
-- Toggle maritime vs land-oriented rulers
-- Simplified trade corridors
-- Vintage and atlas-style map themes
-- Auto-fit bounds for historical network scope
 
----
+Advanced filtering engine
 
-## 🧠 What This Demonstrates
+Comparative governance module
 
-This project highlights:
+Temporal activity modeling
 
-- Historical data modeling
-- Semi-structured data transformation
-- Cultural analytics
-- Interactive UI development (Streamlit)
-- Governance overlap abstraction
-- Digital humanities systems thinking
+Story Mode vs Evidence Mode
 
-It represents a bridge between historical inquiry and computational design.
+Structured queen dossier views
 
----
+🌍 Geospatial Trade Network (Folium)
 
-## 📂 Project Structure
+View the trade network as an interactive atlas:
 
-assets/      → background manuscript-style map image  
-data/        → structured CSV dataset  
-map/         → interactive Folium trade map  
-notebooks/   → exploratory data analysis  
-app.py       → main Streamlit application  
+👉 https://N-JrP.github.io/queens-global-trade-1474-1816/map/queens_trade_map.html
 
----
+Features:
 
-## ▶️ How to Run Locally
+Maritime vs land-power toggles
+
+Trade corridor visualization
+
+Vintage terrain & atlas-style map themes
+
+Popup-based economic summaries
+
+Layer control panel
+
+This module extends the system from dashboard analytics into historical geospatial modeling.
+
+🔎 Analytical Architecture
+👑 Royal Council Filtering Engine
+
+Global full-text search
+
+Maritime classification
+
+Empire-based filtering
+
+Region-based filtering
+
+Searchable persona selection
+
+Governance mode toggle
+
+📜 Queen Governance Dossier
+
+Each ruler is modeled as a structured system node including:
+
+Trade regions
+
+Key ports
+
+Major exports
+
+Trade partners
+
+Policy keywords
+
+Economic impact summary
+
+⚖️ Structural Comparison Engine
+
+Compare two rulers across:
+
+Shared trade regions
+
+Shared ports
+
+Shared exports
+
+Unique governance domains
+
+Maritime orientation
+
+Reign duration
+
+This models institutional overlap rather than narrative similarity.
+
+🧭 Governance Timeline (1474–1816)
+
+Visualizes:
+
+Active rulers per year
+
+Maritime-active rulers
+
+Governance intensity overlap
+
+This acts as a structural proxy for trade governance density over time.
+
+🧠 What This Demonstrates
+
+Historical systems modeling
+
+Semi-structured data transformation
+
+Cultural analytics
+
+Governance abstraction
+
+Geospatial network representation
+
+Interactive UI engineering (Streamlit + Folium)
+
+Digital humanities infrastructure design
+
+📂 Project Structure
+
+assets/ → parchment-style background image
+data/ → structured historical dataset
+map/ → geospatial trade network module
+notebooks/ → exploratory analysis
+app.py → main Streamlit governance explorer
+
+▶️ Run Locally
 
 Install dependencies:
 
 pip install -r requirements.txt
 
-Run the Streamlit app:
+Run Streamlit:
 
 streamlit run app.py
 
-To generate the trade map:
+Generate the trade map:
 
 python map/interactive_trade_map.py
 
-Or open:
+Open:
 
 map/queens_trade_map.html
 
----
+📊 Data Coverage
 
-## 📊 Data Coverage
+Time span: 1474–1816
 
-- Time span: 1474–1816
-- Regions, exports, and ports are semi-structured (semicolon-separated)
-- Trade corridors represented as simplified polylines
-- Maritime power classification included in dataset
+Semi-structured regional & export fields
 
----
+Simplified trade corridor polylines
 
-## 🚀 Roadmap / Future Extensions
+Maritime power classification
 
-- Network graph visualization (ports ↔ regions ↔ empires)
-- Provenance fields (sources + confidence scoring)
-- Animated “living portrait” UI enhancement
-- Embedded interactive map inside Streamlit
-- Timeline slider exploration
-- API layer for dataset access
+Derived reign duration modeling
 
----
+🚀 Roadmap / Future Extensions
+Geospatial Enhancements
 
-## 📌 Purpose
+Animated trade route flows
 
-This is a prototype demonstrating how historical systems can be:
+Time-slider map evolution
 
-1. Structured  
-2. Modeled  
-3. Visualized  
-4. Compared  
-5. Interacted with computationally  
+Weighted corridor intensity
+
+Port-to-port network graph overlay
+
+In-map filtering & dynamic updates
+
+Governance Modeling
+
+Source provenance scoring
+
+Confidence metrics
+
+Trade intensity modeling
+
+Empire clustering analysis
+
+Interface Innovation
+
+Animated “living portrait” panels
+
+AI-generated period-style visuals
+
+Embedded live map within Streamlit
+
+Narrative-driven exploration mode
+
+Infrastructure Expansion
+
+API access layer
+
+Database-backed scaling
+
+Public dataset documentation
+
+📌 Purpose
+
+This project demonstrates how historical systems can be:
+
+Structured
+
+Modeled
+
+Visualized
+
+Compared
+
+Explored computationally
 
 Designed for roles at the intersection of:
-- Digital Humanities
-- Cultural Analytics
-- Data Visualization
-- Historical Systems Modeling
-- History + Technology
 
----
+Digital Humanities
 
-If you are reviewing this for hiring or collaboration, this project represents a working example of transforming historical narrative into computational infrastructure.
+Cultural Analytics
+
+Historical Data Modeling
+
+Data Visualization
+
+History + Technology
