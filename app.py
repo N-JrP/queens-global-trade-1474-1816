@@ -485,33 +485,44 @@ html, body {{
   overflow: visible !important;   /* important: don't create a second scroll container */
 }}
 
-/* ✅ Fix sidebar: make it fixed + allow sidebar scroll only if needed */
+/* ✅ Fix sidebar: fixed + scrollable */
 section[data-testid="stSidebar"] {{
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
   height: 100vh !important;
-  overflow-y: auto !important;     /* sidebar scroll only when content is long */
+  overflow-y: auto !important;
   z-index: 9999 !important;
 }}
 
-/* ❌ remove the nested scrollbar creator (DO NOT add overflow here) */
+/* Keep sidebar inner wrapper normal (avoid extra scrollbars) */
 section[data-testid="stSidebar"] > div {{
   height: auto !important;
   overflow: visible !important;
 }}
 
-/* ✅ Push main content to the right so it doesn't go under the fixed sidebar */
+/* ✅ Main content must shift based on sidebar state (expanded vs collapsed) */
 [data-testid="stAppViewContainer"] {{
-  padding-left: var(--sidebar-width) !important;
   padding-top: 0 !important;
+  transition: padding-left 0.2s ease;
 }}
 
-/* Fallback if --sidebar-width isn't defined */
-@supports not (padding-left: var(--sidebar-width)) {{
-  [data-testid="stAppViewContainer"] {{
-    padding-left: 21rem !important;
-  }}
+/* Expanded sidebar (normal open width) */
+section[data-testid="stSidebar"][aria-expanded="true"] ~ div [data-testid="stAppViewContainer"],
+section[data-testid="stSidebar"][aria-expanded="true"] ~ [data-testid="stAppViewContainer"] {{
+  padding-left: 21rem !important;
+}}
+
+/* Collapsed sidebar (just the arrow rail) */
+section[data-testid="stSidebar"][aria-expanded="false"] ~ div [data-testid="stAppViewContainer"],
+section[data-testid="stSidebar"][aria-expanded="false"] ~ [data-testid="stAppViewContainer"] {{
+  padding-left: 3.5rem !important;
+}}
+
+/* Fallback: if aria-expanded isn't present, default to expanded spacing */
+section[data-testid="stSidebar"]:not([aria-expanded]) ~ div [data-testid="stAppViewContainer"],
+section[data-testid="stSidebar"]:not([aria-expanded]) ~ [data-testid="stAppViewContainer"] {{
+  padding-left: 21rem !important;
 }}
 
 </style>
