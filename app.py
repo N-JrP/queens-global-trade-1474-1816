@@ -465,6 +465,27 @@ section[data-testid="stSidebar"][aria-expanded="false"] ~ [data-testid="stMain"]
   margin-left: var(--qt-sidebar-collapsed) !important;
 }}
 
+/* ✅ GOLD ORNAMENT LINE BETWEEN ✧ ✧ (sidebar dividers only) */
+section[data-testid="stSidebar"] .council-divider .line{
+  height: 2px !important;
+  flex: 1 !important;
+  background: linear-gradient(
+    to right,
+    rgba(181,155,90,0.0),
+    rgba(181,155,90,0.95),
+    rgba(214,184,106,0.95),
+    rgba(181,155,90,0.95),
+    rgba(181,155,90,0.0)
+  ) !important;
+  opacity: 0.95 !important;
+  border-radius: 2px !important;
+}
+
+section[data-testid="stSidebar"] .council-divider .sigil{
+  color: #6b4f2a !important;
+  opacity: 0.85 !important;
+}
+
 </style>
 """,
     unsafe_allow_html=True,
