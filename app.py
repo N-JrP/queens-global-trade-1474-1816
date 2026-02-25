@@ -55,9 +55,9 @@ st.markdown(
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&display=swap');
 
-/* ===============================
+/* ------------------------------
    GLOBAL BACKGROUND
-=============================== */
+------------------------------ */
 
 .stApp {{
     background: linear-gradient(180deg, #f6f0dc 0%, #f3e8c8 100%);
@@ -71,12 +71,10 @@ st.markdown(
     inset: 0;
     pointer-events: none;
     z-index: 0;
-
     background-image: url("{MAP_URI if MAP_URI else ""}");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-
     opacity: 0.38;
     filter: sepia(0.55) contrast(1.05) saturate(0.85);
 }}
@@ -88,7 +86,6 @@ st.markdown(
     inset: 0;
     pointer-events: none;
     z-index: 1;
-
     background: linear-gradient(
         180deg,
         rgba(246,240,220,0.68),
@@ -96,135 +93,61 @@ st.markdown(
     );
 }}
 
-/* Ensure content above background */
+/* Ensure app content above overlays */
 [data-testid="stAppViewContainer"] {{
     position: relative;
     z-index: 5;
 }}
 
-/* ===============================
-   SIDEBAR + LAYOUT FIX (CLEAN)
-=============================== */
-
-:root {{
-  --qt-sidebar-expanded: 21rem;
-  --qt-sidebar-collapsed: 3.5rem;
+/* Hide Streamlit Cloud header */
+header[data-testid="stHeader"] {{
+  display: none !important;
 }}
 
-/* Sidebar fixed */
-section[data-testid="stSidebar"] {{
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  height: 100vh !important;
-  overflow-y: auto !important;
-  z-index: 9999 !important;
-  background: linear-gradient(180deg, #f3e8c8 0%, #efe1bd 100%);
-  border-right: 1px solid rgba(120, 90, 40, 0.25);
-  box-shadow: 6px 0 18px rgba(120, 90, 40, 0.15);
-  padding: 0.8rem 1rem !important;
-}}
-
-/* Expanded width */
-section[data-testid="stSidebar"][aria-expanded="true"] {{
-  width: var(--qt-sidebar-expanded) !important;
-  min-width: var(--qt-sidebar-expanded) !important;
-  max-width: var(--qt-sidebar-expanded) !important;
-}}
-
-/* Collapsed width */
-section[data-testid="stSidebar"][aria-expanded="false"] {{
-  width: var(--qt-sidebar-collapsed) !important;
-  min-width: var(--qt-sidebar-collapsed) !important;
-  max-width: var(--qt-sidebar-collapsed) !important;
-}}
-
-/* Prevent nested scrollbar */
-section[data-testid="stSidebar"] > div {{
-  height: auto !important;
-  overflow: visible !important;
-}}
-
-/* Main container default FULL width */
-[data-testid="stAppViewContainer"] {{
-  padding-top: 0 !important;
-  padding-left: 0 !important;
-  transition: padding-left 0.2s ease;
-}}
-
-/* Shift when expanded */
-body:has(section[data-testid="stSidebar"][aria-expanded="true"])
-  [data-testid="stAppViewContainer"] {{
-  padding-left: var(--qt-sidebar-expanded) !important;
-}}
-
-/* Small rail when collapsed */
-body:has(section[data-testid="stSidebar"][aria-expanded="false"])
-  [data-testid="stAppViewContainer"] {{
-  padding-left: var(--qt-sidebar-collapsed) !important;
-}}
-
-/* ===============================
-   SCROLL FIX (ONE SCROLLBAR)
-=============================== */
-
+/* Single scrollbar only */
 html, body {{
   overflow-y: auto !important;
   height: auto !important;
 }}
-
 .stApp {{
   overflow: visible !important;
 }}
 
-/* ===============================
-   TYPOGRAPHY
-=============================== */
+/* ------------------------------
+   SIDEBAR (SAFE STICKY)
+------------------------------ */
 
-h1, h2, h3, h4 {{
-    font-family: "Playfair Display", Georgia, serif;
-    color: #5b4523;
+section[data-testid="stSidebar"] {{
+    background: linear-gradient(180deg, #f3e8c8 0%, #efe1bd 100%);
+    border-right: 1px solid rgba(120, 90, 40, 0.25);
+    box-shadow: 6px 0 18px rgba(120, 90, 40, 0.15);
+    padding: 0.8rem 1rem !important;
+
+    /* sticky instead of fixed */
+    position: sticky !important;
+    top: 0 !important;
+    height: 100vh !important;
+    overflow-y: auto !important;
+    z-index: 20;
 }}
 
-p, li, div, span, label {{
-    color: #3e321f;
-    font-family: "Playfair Display", Georgia, serif;
+section[data-testid="stSidebar"]::after {{
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -2px;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        #b59b5a,
+        #d6b86a,
+        #b59b5a,
+        transparent
+    );
+    opacity: 0.85;
 }}
-
-/* ===============================
-   METRICS
-=============================== */
-
-div[data-testid="stMetric"] {{
-    background: linear-gradient(145deg, #f4ecd8, #efe4c8);
-    border: 1px solid #d8c9a6;
-    border-radius: 14px;
-    padding: 12px 14px;
-    box-shadow: 0 4px 10px rgba(120, 90, 40, 0.12);
-}}
-
-div[data-testid="stMetricLabel"] {{
-    color: #6a532f !important;
-    font-weight: 600;
-}}
-
-div[data-testid="stMetricValue"] {{
-    color: #4a381d !important;
-}}
-
-/* ===============================
-   EXPANDERS
-=============================== */
-
-div[data-testid="stExpander"] {{
-    border: 1px solid rgba(120, 90, 40, 0.25);
-    border-radius: 12px;
-    background: rgba(244, 236, 216, 0.35);
-}}
-
-/* ===============================
-   SIDEBAR INPUT STYLING
-=============================== */
 
 section[data-testid="stSidebar"] * {{
     font-family: "Playfair Display", Georgia, serif;
@@ -252,6 +175,138 @@ section[data-testid="stSidebar"] button {{
 
 section[data-testid="stSidebar"] button:hover {{
     background: #e6d7b2;
+}}
+
+section[data-testid="stSidebar"] div.stButton > button {{
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 260px;
+}}
+
+section[data-testid="stSidebar"] .stTextInput,
+section[data-testid="stSidebar"] .stSelectbox,
+section[data-testid="stSidebar"] .stTextArea,
+section[data-testid="stSidebar"] .stButton {{
+  width: 100%;
+}}
+
+section[data-testid="stSidebar"] div[data-testid="stRadio"] {{
+  background: rgba(244,236,216,0.40);
+  border: 1px solid rgba(120,90,40,0.18);
+  border-radius: 12px;
+  padding: 10px 12px 8px 12px;
+}}
+
+/* ------------------------------
+   ANTIQUE FRAME
+------------------------------ */
+
+.block-container {{
+    padding-top: 1.2rem;
+    border: 1px solid rgba(120, 90, 40, 0.25);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 20px rgba(120, 90, 40, 0.12);
+    margin-top: 10px;
+    margin-left: 4px;
+}}
+
+/* ------------------------------
+   TYPOGRAPHY
+------------------------------ */
+
+h1, h2, h3, h4 {{
+    font-family: "Playfair Display", Georgia, serif;
+    color: #5b4523;
+}}
+p, li, div, span, label {{
+    color: #3e321f;
+    font-family: "Playfair Display", Georgia, serif;
+}}
+
+/* ------------------------------
+   METRICS
+------------------------------ */
+
+div[data-testid="stMetric"] {{
+    background: linear-gradient(145deg, #f4ecd8, #efe4c8);
+    border: 1px solid #d8c9a6;
+    border-radius: 14px;
+    padding: 12px 14px;
+    box-shadow: 0 4px 10px rgba(120, 90, 40, 0.12);
+}}
+
+div[data-testid="stMetricLabel"] {{
+    color: #6a532f !important;
+    font-weight: 600;
+}}
+
+div[data-testid="stMetricValue"] {{
+    color: #4a381d !important;
+}}
+
+/* ------------------------------
+   EXPANDERS
+------------------------------ */
+
+div[data-testid="stExpander"] {{
+    border: 1px solid rgba(120, 90, 40, 0.25);
+    border-radius: 12px;
+    background: rgba(244, 236, 216, 0.35);
+}}
+
+/* ------------------------------
+   PORTRAIT FRAMES (RESTORED)
+------------------------------ */
+
+.portrait-frame {{
+  border-radius: 14px;
+  padding: 16px;
+  display: inline-block;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.18);
+}}
+.portrait-img {{
+  display: block;
+  max-width: 320px;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}}
+.frame-renaissance {{
+  background: linear-gradient(145deg, #d6b35a, #b08a3a);
+  box-shadow:
+    0 0 0 6px rgba(92,68,24,0.65),
+    0 0 0 10px rgba(214,179,90,0.75),
+    0 12px 26px rgba(0,0,0,0.25);
+}}
+.frame-baroque {{
+  background: linear-gradient(145deg, #e1c06a, #b8872f);
+  box-shadow:
+    0 0 0 6px rgba(110,78,18,0.70),
+    0 0 0 10px rgba(225,192,106,0.75),
+    0 12px 26px rgba(0,0,0,0.26);
+}}
+.frame-wood {{
+  background: linear-gradient(145deg, #5b3a22, #3b2414);
+  box-shadow:
+    0 0 0 6px rgba(28,18,10,0.75),
+    0 0 0 10px rgba(110,78,52,0.55),
+    0 12px 26px rgba(0,0,0,0.35);
+}}
+.portrait-name {{
+  margin-top: 12px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 18px;
+  color: #4b3b2b;
+}}
+.portrait-sub {{
+  margin-top: 2px;
+  text-align: center;
+  font-size: 13px;
+  font-style: italic;
+  color: rgba(75,59,43,0.75);
 }}
 
 </style>
