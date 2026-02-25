@@ -466,7 +466,7 @@ section[data-testid="stSidebar"][aria-expanded="false"] ~ [data-testid="stMain"]
 }}
 
 /* ✅ GOLD ORNAMENT LINE BETWEEN ✧ ✧ (sidebar dividers only) */
-section[data-testid="stSidebar"] .council-divider .line{
+section[data-testid="stSidebar"] .council-divider .line{{
   height: 2px !important;
   flex: 1 !important;
   background: linear-gradient(
@@ -479,12 +479,12 @@ section[data-testid="stSidebar"] .council-divider .line{
   ) !important;
   opacity: 0.95 !important;
   border-radius: 2px !important;
-}
+}}
 
-section[data-testid="stSidebar"] .council-divider .sigil{
+section[data-testid="stSidebar"] .council-divider .sigil{{
   color: #6b4f2a !important;
   opacity: 0.85 !important;
-}
+}}
 
 </style>
 """,
