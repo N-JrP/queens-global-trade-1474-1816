@@ -948,14 +948,14 @@ with col2:
             dossier_html = f"""
 <div class="parchment-card">
   <div class="dossier" style="background: transparent; border: 0; box-shadow: none; padding: 0;">
-    <div class="row"><span class="k"><strong>Empire:</strong></span> <span class="v">{q.get('empire','')}</span></div>
-    <div class="row"><span class="k"><strong>Capital:</strong></span> <span class="v">{q.get('capital','')}</span></div>
-    <div class="row"><span class="k"><strong>Trade Regions:</strong></span> <span class="v">{q.get('major_trade_regions','')}</span></div>
-    <div class="row"><span class="k"><strong>Key Ports:</strong></span> <span class="v">{q.get('key_ports','')}</span></div>
-    <div class="row"><span class="k"><strong>Key Exports:</strong></span> <span class="v">{q.get('key_exports','')}</span></div>
-    <div class="row"><span class="k"><strong>Trade Partners:</strong></span> <span class="v">{q.get('trade_partners','')}</span></div>
-    <div class="row"><span class="k"><strong>Policy Keywords:</strong></span> <span class="v">{q.get('trade_policy_keywords','')}</span></div>
-    <div class="row"><span class="k"><strong>Economic Impact:</strong></span> <span class="v">{q.get('economic_impact_summary','')}</span></div>
+    <div class="row"><span class="k"><b>Empire:</b></span> <span class="v">{q.get('empire','')}</span></div>
+    <div class="row"><span class="k"><b>Capital:</b></span> <span class="v">{q.get('capital','')}</span></div>
+    <div class="row"><span class="k"><b>Trade Regions:</b></span> <span class="v">{q.get('major_trade_regions','')}</span></div>
+    <div class="row"><span class="k"><b>Key Ports:</b></span> <span class="v">{q.get('key_ports','')}</span></div>
+    <div class="row"><span class="k"><b>Key Exports:</b></span> <span class="v">{q.get('key_exports','')}</span></div>
+    <div class="row"><span class="k"><b>Trade Partners:</b></span> <span class="v">{q.get('trade_partners','')}</span></div>
+    <div class="row"><span class="k"><b>Policy Keywords:</b></span> <span class="v">{q.get('trade_policy_keywords','')}</span></div>
+    <div class="row"><span class="k"><b>Economic Impact:</b></span> <span class="v">{q.get('economic_impact_summary','')}</span></div>
   </div>
 </div>
 """
@@ -1055,7 +1055,7 @@ if len(filtered) >= 2:
     with colS1:
         st.markdown(
             f"""
-            <div class="compare-panel">
+            <div class="parchment-card">
                 <div class="title">Shared Infrastructure</div>
                 <ul>
                     <li><b>Trade regions:</b> {fmt_list(overlap_regions)}</li>
@@ -1070,7 +1070,7 @@ if len(filtered) >= 2:
     with colS2:
         st.markdown(
             f"""
-            <div class="compare-panel">
+            <div class="parchment-card">
                 <div class="title">Queen A — Unique</div>
                 <ul>
                     <li><b>Regions:</b> {fmt_list(A_unique_regions)}</li>
@@ -1085,7 +1085,7 @@ if len(filtered) >= 2:
     with colS3:
         st.markdown(
             f"""
-            <div class="compare-panel">
+            <div class="parchment-card">
                 <div class="title">Queen B — Unique</div>
                 <ul>
                     <li><b>Regions:</b> {fmt_list(B_unique_regions)}</li>
