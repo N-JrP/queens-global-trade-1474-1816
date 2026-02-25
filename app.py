@@ -955,11 +955,7 @@ with col2:
     <div class="row"><span class="k">Key Exports:</span> <span class="v">{q.get('key_exports','')}</span></div>
     <div class="row"><span class="k">Trade Partners:</span> <span class="v">{q.get('trade_partners','')}</span></div>
     <div class="row"><span class="k">Policy Keywords:</span> <span class="v">{q.get('trade_policy_keywords','')}</span></div>
-
-    <hr style="border:0; border-top:1px solid rgba(120,90,40,0.25); margin:10px 0;">
-
-    <div class="row"><span class="k">Economic Impact:</span></div>
-    <div class="row"><span class="v">{q.get('economic_impact_summary','')}</span></div>
+    <div class="row"><span class="k">Economic Impact:</span> <span class="v">{q.get('economic_impact_summary','')}</span></div>
   </div>
 </div>
 """
