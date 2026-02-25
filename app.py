@@ -495,6 +495,18 @@ header[data-testid="stHeader"] {{
   padding-top: 0 !important;
 }}
 
+/* Strong fallback for Streamlit sidebar wrapper */
+[data-testid="stSidebar"] {{
+  position: sticky !important;
+  top: 0 !important;
+  height: 100vh !important;
+}}
+
+[data-testid="stSidebarContent"] {{
+  height: 100vh !important;
+  overflow-y: auto !important;
+}}
+
 </style>
 """,
     unsafe_allow_html=True,
