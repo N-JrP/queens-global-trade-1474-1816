@@ -114,86 +114,117 @@ html, body {{
 }}
 
 /* ------------------------------
-   SIDEBAR (SAFE STICKY)
+   SIDEBAR (FIXED + AUTO-RESPONSIVE)
+   - Fixed sidebar (doesn't move)
+   - Main content shifts automatically (no gap)
 ------------------------------ */
 
-section[data-testid="stSidebar"] {{
-    background: linear-gradient(180deg, #f3e8c8 0%, #efe1bd 100%);
-    border-right: 1px solid rgba(120, 90, 40, 0.25);
-    box-shadow: 6px 0 18px rgba(120, 90, 40, 0.15);
-    padding: 0.8rem 1rem !important;
+/* Choose your widths */
+:root{
+  --qt-sidebar-expanded: 21rem;    /* open width */
+  --qt-sidebar-collapsed: 3.5rem;  /* collapsed rail */
+}
 
-    /* sticky instead of fixed */
-    position: relative !important;
-    z-index: 20;
-}}
+/* Sidebar is fixed */
+section[data-testid="stSidebar"]{
+  background: linear-gradient(180deg, #f3e8c8 0%, #efe1bd 100%);
+  border-right: 1px solid rgba(120, 90, 40, 0.25);
+  box-shadow: 6px 0 18px rgba(120, 90, 40, 0.15);
+  padding: 0.8rem 1rem !important;
 
-section[data-testid="stSidebar"]::after {{
-    content: "";
-    position: absolute;
-    top: 0;
-    right: -2px;
-    width: 2px;
-    height: 100%;
-    background: linear-gradient(
-        to bottom,
-        transparent,
-        #b59b5a,
-        #d6b86a,
-        #b59b5a,
-        transparent
-    );
-    opacity: 0.85;
-}}
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  height: 100vh !important;
+  overflow-y: auto !important;
+  z-index: 20 !important;
 
-section[data-testid="stSidebar"] * {{
-    font-family: "Playfair Display", Georgia, serif;
-    color: #4a381d !important;
-}}
+  width: var(--qt-sidebar-expanded) !important;
+}
 
+/* Your gold ruler line */
+section[data-testid="stSidebar"]::after{
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -2px;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    #b59b5a,
+    #d6b86a,
+    #b59b5a,
+    transparent
+  );
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* Sidebar typography */
+section[data-testid="stSidebar"] *{
+  font-family: "Playfair Display", Georgia, serif;
+  color: #4a381d !important;
+}
+
+/* Inputs */
 section[data-testid="stSidebar"] input,
-section[data-testid="stSidebar"] textarea {{
-    background-color: rgba(244,236,216,0.92) !important;
-    border: 1px solid #d8c9a6 !important;
-    border-radius: 12px !important;
-}}
+section[data-testid="stSidebar"] textarea{
+  background-color: rgba(244,236,216,0.92) !important;
+  border: 1px solid #d8c9a6 !important;
+  border-radius: 12px !important;
+}
 
-section[data-testid="stSidebar"] div[data-baseweb="select"] > div {{
-    background-color: rgba(244,236,216,0.92) !important;
-    border: 1px solid #d8c9a6 !important;
-    border-radius: 12px !important;
-}}
+/* Selectbox baseweb */
+section[data-testid="stSidebar"] div[data-baseweb="select"] > div{
+  background-color: rgba(244,236,216,0.92) !important;
+  border: 1px solid #d8c9a6 !important;
+  border-radius: 12px !important;
+}
 
-section[data-testid="stSidebar"] button {{
-    background: linear-gradient(145deg, #efe4c8, #e6d7b2);
-    border: 1px solid #c9b78d;
-    border-radius: 10px;
-}}
-
-section[data-testid="stSidebar"] button:hover {{
-    background: #e6d7b2;
-}}
-
-section[data-testid="stSidebar"] div.stButton > button {{
-    display: block;
-    margin: 0 auto;
-    width: 100%;
-    max-width: 260px;
-}}
-
-section[data-testid="stSidebar"] .stTextInput,
-section[data-testid="stSidebar"] .stSelectbox,
-section[data-testid="stSidebar"] .stTextArea,
-section[data-testid="stSidebar"] .stButton {{
+/* Buttons */
+section[data-testid="stSidebar"] button{
+  background: linear-gradient(145deg, #efe4c8, #e6d7b2);
+  border: 1px solid #c9b78d;
+  border-radius: 10px;
+}
+section[data-testid="stSidebar"] button:hover{
+  background: #e6d7b2;
+}
+section[data-testid="stSidebar"] div.stButton > button{
+  display: block;
+  margin: 0 auto;
   width: 100%;
-}}
+  max-width: 260px;
+}
 
-section[data-testid="stSidebar"] div[data-testid="stRadio"] {{
+/* Radio card */
+section[data-testid="stSidebar"] div[data-testid="stRadio"]{
   background: rgba(244,236,216,0.40);
   border: 1px solid rgba(120,90,40,0.18);
   border-radius: 12px;
   padding: 10px 12px 8px 12px;
-}}
+}
+
+/* --- MAIN CONTENT SHIFTING --- */
+
+/* Default (expanded sidebar) */
+[data-testid="stAppViewContainer"]{
+  padding-left: var(--qt-sidebar-expanded) !important;
+  transition: padding-left 0.2s ease;
+}
+
+/* When collapsed control exists, sidebar is collapsed
+   (Chrome supports :has - Streamlit Cloud runs on Chrome) */
+body:has([data-testid="collapsedControl"]) section[data-testid="stSidebar"]{
+  width: var(--qt-sidebar-collapsed) !important;
+  padding-left: 0.4rem !important;
+  padding-right: 0.4rem !important;
+}
+body:has([data-testid="collapsedControl"]) [data-testid="stAppViewContainer"]{
+  padding-left: var(--qt-sidebar-collapsed) !important;
+}
 
 /* ✅ Sidebar stays visible while scrolling, without breaking Streamlit layout */
 section[data-testid="stSidebar"] > div {{
