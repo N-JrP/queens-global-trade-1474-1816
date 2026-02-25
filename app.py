@@ -456,6 +456,16 @@ section[data-testid="stSidebar"] .stButton {{
   width: 100%;
 }}
 
+/* If any container is accidentally dimmed on Cloud, undo it */
+.stApp,
+[data-testid="stAppViewContainer"],
+[data-testid="stMain"],
+[data-testid="stMainBlockContainer"],
+section.main {{
+  opacity: 1 !important;
+  filter: none !important;
+}}
+
 </style>
 """,
     unsafe_allow_html=True,
