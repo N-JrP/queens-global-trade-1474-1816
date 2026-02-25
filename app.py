@@ -49,20 +49,22 @@ if not MAP_URI:
 
 # =========================================================
 # 2) THEME: Medieval Manuscript / Parchment UI (with map)
-#    IMPORTANT: map/veil are behind content via NEGATIVE z-index
 # =========================================================
 st.markdown(
     f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&display=swap');
 
-/* ---- Global Background ---- */
+/* ===============================
+   GLOBAL BACKGROUND
+=============================== */
+
 .stApp {{
     background: linear-gradient(180deg, #f6f0dc 0%, #f3e8c8 100%);
     font-family: "Playfair Display", Georgia, serif;
 }}
 
-/* Map layer (BEHIND UI) */
+/* Map layer */
 .stApp::before {{
     content: "";
     position: fixed;
@@ -79,7 +81,7 @@ st.markdown(
     filter: sepia(0.55) contrast(1.05) saturate(0.85);
 }}
 
-/* Parchment veil (still BEHIND UI) */
+/* Parchment veil */
 .stApp::after {{
     content: "";
     position: fixed;
@@ -94,38 +96,105 @@ st.markdown(
     );
 }}
 
-/* Ensure entire app content is above background layers */
+/* Ensure content above background */
 [data-testid="stAppViewContainer"] {{
     position: relative;
     z-index: 5;
 }}
+
+/* ===============================
+   SIDEBAR + LAYOUT FIX (CLEAN)
+=============================== */
+
+:root {{
+  --qt-sidebar-expanded: 21rem;
+  --qt-sidebar-collapsed: 3.5rem;
+}}
+
+/* Sidebar fixed */
 section[data-testid="stSidebar"] {{
-    position: relative;
-    z-index: 20;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  height: 100vh !important;
+  overflow-y: auto !important;
+  z-index: 9999 !important;
+  background: linear-gradient(180deg, #f3e8c8 0%, #efe1bd 100%);
+  border-right: 1px solid rgba(120, 90, 40, 0.25);
+  box-shadow: 6px 0 18px rgba(120, 90, 40, 0.15);
+  padding: 0.8rem 1rem !important;
 }}
 
-/* ---- Antique border frame ---- */
-.block-container {{
-    padding-top: 1.2rem;
-    border: 1px solid rgba(120, 90, 40, 0.25);
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 8px 20px rgba(120, 90, 40, 0.12);
-    margin-top: 10px;
-    margin-left: 4px;
+/* Expanded width */
+section[data-testid="stSidebar"][aria-expanded="true"] {{
+  width: var(--qt-sidebar-expanded) !important;
+  min-width: var(--qt-sidebar-expanded) !important;
+  max-width: var(--qt-sidebar-expanded) !important;
 }}
 
-/* ---- Typography ---- */
+/* Collapsed width */
+section[data-testid="stSidebar"][aria-expanded="false"] {{
+  width: var(--qt-sidebar-collapsed) !important;
+  min-width: var(--qt-sidebar-collapsed) !important;
+  max-width: var(--qt-sidebar-collapsed) !important;
+}}
+
+/* Prevent nested scrollbar */
+section[data-testid="stSidebar"] > div {{
+  height: auto !important;
+  overflow: visible !important;
+}}
+
+/* Main container default FULL width */
+[data-testid="stAppViewContainer"] {{
+  padding-top: 0 !important;
+  padding-left: 0 !important;
+  transition: padding-left 0.2s ease;
+}}
+
+/* Shift when expanded */
+body:has(section[data-testid="stSidebar"][aria-expanded="true"])
+  [data-testid="stAppViewContainer"] {{
+  padding-left: var(--qt-sidebar-expanded) !important;
+}}
+
+/* Small rail when collapsed */
+body:has(section[data-testid="stSidebar"][aria-expanded="false"])
+  [data-testid="stAppViewContainer"] {{
+  padding-left: var(--qt-sidebar-collapsed) !important;
+}}
+
+/* ===============================
+   SCROLL FIX (ONE SCROLLBAR)
+=============================== */
+
+html, body {{
+  overflow-y: auto !important;
+  height: auto !important;
+}}
+
+.stApp {{
+  overflow: visible !important;
+}}
+
+/* ===============================
+   TYPOGRAPHY
+=============================== */
+
 h1, h2, h3, h4 {{
     font-family: "Playfair Display", Georgia, serif;
     color: #5b4523;
 }}
+
 p, li, div, span, label {{
     color: #3e321f;
     font-family: "Playfair Display", Georgia, serif;
 }}
 
-/* ---- KPI metric boxes ---- */
+/* ===============================
+   METRICS
+=============================== */
+
 div[data-testid="stMetric"] {{
     background: linear-gradient(145deg, #f4ecd8, #efe4c8);
     border: 1px solid #d8c9a6;
@@ -133,104 +202,30 @@ div[data-testid="stMetric"] {{
     padding: 12px 14px;
     box-shadow: 0 4px 10px rgba(120, 90, 40, 0.12);
 }}
+
 div[data-testid="stMetricLabel"] {{
     color: #6a532f !important;
     font-weight: 600;
 }}
+
 div[data-testid="stMetricValue"] {{
     color: #4a381d !important;
 }}
 
-/* ---- Expander styling ---- */
+/* ===============================
+   EXPANDERS
+=============================== */
+
 div[data-testid="stExpander"] {{
     border: 1px solid rgba(120, 90, 40, 0.25);
     border-radius: 12px;
     background: rgba(244, 236, 216, 0.35);
 }}
 
-/* ---- Parchment HTML table ---- */
-.parchment-table-wrap {{
-    background: rgba(244, 236, 216, 0.65);
-    border: 1px solid rgba(120, 90, 40, 0.22);
-    border-radius: 14px;
-    padding: 10px 12px;
-    box-shadow: 0 4px 10px rgba(120, 90, 40, 0.08);
-}}
-.parchment-table-scroll {{
-    overflow-y: auto;
-    border-radius: 10px;
-}}
-.parchment-table {{
-    width: 100%;
-    border-collapse: collapse;
-    font-family: Georgia, serif;
-    font-size: 14px;
-}}
-.parchment-table thead th {{
-    position: sticky;
-    top: 0;
-    background: #e9dcc0;
-    color: #4a381d;
-    border: 1px solid #d8c9a6;
-    padding: 8px;
-    text-align: left;
-    z-index: 1;
-}}
-.parchment-table tbody td {{
-    background: #f4ecd8;
-    color: #3e321f;
-    border: 1px solid #d8c9a6;
-    padding: 8px;
-    vertical-align: top;
-}}
-.parchment-table tbody tr:nth-child(even) td {{
-    background: #f2e4c6;
-}}
-.parchment-table tbody tr:hover td {{
-    background: #ead7b1;
-    transition: background 0.12s ease-in-out;
-}}
+/* ===============================
+   SIDEBAR INPUT STYLING
+=============================== */
 
-/* ---- About cards ---- */
-.parchment-card {{
-    background: linear-gradient(145deg, #f4ecd8, #efe4c8);
-    padding: 22px;
-    border-radius: 14px;
-    border: 1px solid #d8c9a6;
-    box-shadow: 0 4px 10px rgba(120, 90, 40, 0.15);
-}}
-.parchment-card h4 {{
-    margin-top: 0;
-    color: #5a4a2f;
-}}
-.parchment-card ul {{
-    padding-left: 18px;
-}}
-
-/* ---- Sidebar medieval styling ---- */
-section[data-testid="stSidebar"] {{
-    background: linear-gradient(180deg, #f3e8c8 0%, #efe1bd 100%);
-    border-right: 1px solid rgba(120, 90, 40, 0.25);
-    box-shadow: 6px 0 18px rgba(120, 90, 40, 0.15);
-    padding: 0.8rem 1rem !important;
-}}
-section[data-testid="stSidebar"]::after {{
-    content: "";
-    position: absolute;
-    top: 0;
-    right: -2px;
-    width: 2px;
-    height: 100%;
-    background: linear-gradient(
-        to bottom,
-        transparent,
-        #b59b5a,
-        #d6b86a,
-        #b59b5a,
-        transparent
-    );
-    opacity: 0.85;
-}}
 section[data-testid="stSidebar"] * {{
     font-family: "Playfair Display", Georgia, serif;
     color: #4a381d !important;
@@ -239,15 +234,12 @@ section[data-testid="stSidebar"] * {{
 section[data-testid="stSidebar"] input,
 section[data-testid="stSidebar"] textarea {{
     background-color: rgba(244,236,216,0.92) !important;
-    color: #4a381d !important;
     border: 1px solid #d8c9a6 !important;
     border-radius: 12px !important;
 }}
 
-/* Apply same Royal Inquiry style to Selectboxes */
 section[data-testid="stSidebar"] div[data-baseweb="select"] > div {{
     background-color: rgba(244,236,216,0.92) !important;
-    color: #4a381d !important;
     border: 1px solid #d8c9a6 !important;
     border-radius: 12px !important;
 }}
@@ -255,325 +247,11 @@ section[data-testid="stSidebar"] div[data-baseweb="select"] > div {{
 section[data-testid="stSidebar"] button {{
     background: linear-gradient(145deg, #efe4c8, #e6d7b2);
     border: 1px solid #c9b78d;
-    color: #4a381d !important;
     border-radius: 10px;
 }}
+
 section[data-testid="stSidebar"] button:hover {{
     background: #e6d7b2;
-}}
-
-/* ✅ Center ONLY the "Clear the Council" button (keep it nice and not full-width) */
-section[data-testid="stSidebar"] div.stButton > button {{
-    display: block;
-    margin: 0 auto;
-    width: 100%;
-    max-width: 260px;
-}}
-
-/* ---- Manuscript Section Header ---- */
-.manuscript-header {{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    margin: 20px 0 12px 0;
-}}
-.manuscript-header .glyph {{
-    font-size: 18px;
-    opacity: 0.95;
-    color: #6b4f2a;
-    filter: drop-shadow(0 1px 0 rgba(255,255,255,0.35));
-}}
-.manuscript-header .label {{
-    position: relative;
-    padding: 9px 16px;
-    border-radius: 12px;
-    border: 1px solid rgba(120,90,40,0.35);
-    background: linear-gradient(145deg, rgba(244,236,216,0.75), rgba(239,228,200,0.55));
-    box-shadow: 0 5px 12px rgba(120,90,40,0.14);
-    font-weight: 800;
-    letter-spacing: 0.6px;
-    color: #4a381d;
-    white-space: nowrap;
-    text-transform: uppercase;
-}}
-.manuscript-header .label:before,
-.manuscript-header .label:after {{
-    content:"";
-    position:absolute;
-    top: 50%;
-    width: 10px;
-    height: 10px;
-    transform: translateY(-50%) rotate(45deg);
-    background: rgba(244,236,216,0.70);
-    border: 1px solid rgba(120,90,40,0.25);
-}}
-.manuscript-header .label:before {{ left: -6px; }}
-.manuscript-header .label:after {{ right: -6px; }}
-
-.manuscript-header .rule {{
-    height: 2px;
-    flex: 1;
-    background: linear-gradient(to right,
-        rgba(181,155,90,0.0),
-        rgba(181,155,90,0.95),
-        rgba(214,184,106,0.95),
-        rgba(181,155,90,0.95),
-        rgba(181,155,90,0.0)
-    );
-    opacity: 0.95;
-    border-radius: 2px;
-}}
-
-/* ---- Portrait frames ---- */
-.portrait-frame {{
-  border-radius: 14px;
-  padding: 16px;
-  display: inline-block;
-  box-shadow: 0 10px 22px rgba(0,0,0,0.18);
-}}
-.portrait-img {{
-  display: block;
-  max-width: 320px;
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-}}
-.frame-renaissance {{
-  background: linear-gradient(145deg, #d6b35a, #b08a3a);
-  box-shadow:
-    0 0 0 6px rgba(92,68,24,0.65),
-    0 0 0 10px rgba(214,179,90,0.75),
-    0 12px 26px rgba(0,0,0,0.25);
-}}
-.frame-baroque {{
-  background: linear-gradient(145deg, #e1c06a, #b8872f);
-  box-shadow:
-    0 0 0 6px rgba(110,78,18,0.70),
-    0 0 0 10px rgba(225,192,106,0.75),
-    0 12px 26px rgba(0,0,0,0.26);
-}}
-.frame-wood {{
-  background: linear-gradient(145deg, #5b3a22, #3b2414);
-  box-shadow:
-    0 0 0 6px rgba(28,18,10,0.75),
-    0 0 0 10px rgba(110,78,52,0.55),
-    0 12px 26px rgba(0,0,0,0.35);
-}}
-.portrait-name {{
-  margin-top: 12px;
-  text-align: center;
-  font-weight: 700;
-  font-size: 18px;
-  color: #4b3b2b;
-}}
-.portrait-sub {{
-  margin-top: 2px;
-  text-align: center;
-  font-size: 13px;
-  font-style: italic;
-  color: rgba(75,59,43,0.75);
-}}
-
-/* ---- Queen dossier panel ---- */
-.dossier {{
-  background: rgba(244,236,216,0.55);
-  border: 1px solid rgba(120,90,40,0.22);
-  border-radius: 14px;
-  padding: 12px 14px;
-  box-shadow: 0 5px 12px rgba(120,90,40,0.10);
-}}
-.dossier .row {{ margin: 6px 0; }}
-.dossier .k {{ font-weight: 800; color: #4a381d; }}
-.dossier .v {{ color: #3e321f; white-space: normal; line-height: 1.5; }}
-
-/* ---- Compare panels (3-column fill) ---- */
-.compare-panel {{
-  background: rgba(244,236,216,0.55);
-  border: 1px solid rgba(120,90,40,0.22);
-  border-radius: 14px;
-  padding: 12px 14px;
-  box-shadow: 0 5px 12px rgba(120,90,40,0.08);
-  min-height: 140px;
-}}
-.compare-panel .title {{
-  font-weight: 900;
-  color: #4a381d;
-  letter-spacing: 0.3px;
-  margin-bottom: 8px;
-}}
-.compare-panel ul {{ margin: 0 0 0 18px; padding: 0; }}
-.compare-panel li {{ margin: 6px 0; line-height: 1.45; }}
-
-/* ⭐ Divider (reusable) */
-.council-divider{{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin: 8px 0 12px 0;
-  width: 100%;
-}}
-.council-divider .sigil{{
-  font-size: 13px;
-  color:#6b4f2a;
-  opacity:0.85;
-}}
-.council-divider .line{{
-  height:1px;
-  flex:1;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(181,155,90,0.85),
-    transparent
-  );
-  opacity:0.9;
-}}
-
-/* ✅ Chronicle Mode "tab/card" look */
-.council-tab{{
-  background: rgba(244,236,216,0.55);
-  border: 1px solid rgba(120,90,40,0.22);
-  border-radius: 12px;
-  padding: 10px 12px;
-  margin: 6px 0 10px 0;
-  box-shadow: 0 5px 12px rgba(120,90,40,0.08);
-  text-align: center;
-  font-weight: 800;
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-  color: #4a381d;
-}}
-
-/* ✅ Put the radio widget inside a "card" too */
-section[data-testid="stSidebar"] div[data-testid="stRadio"]{{
-  background: rgba(244,236,216,0.40);
-  border: 1px solid rgba(120,90,40,0.18);
-  border-radius: 12px;
-  padding: 10px 12px 8px 12px;
-}}
-
-/* ✅ Keep widgets full width (prevents thin stacked layout) */
-section[data-testid="stSidebar"] .stTextInput,
-section[data-testid="stSidebar"] .stSelectbox,
-section[data-testid="stSidebar"] .stTextArea,
-section[data-testid="stSidebar"] .stButton {{
-  width: 100%;
-}}
-
-/* If any container is accidentally dimmed on Cloud, undo it */
-.stApp,
-[data-testid="stAppViewContainer"],
-[data-testid="stMain"],
-[data-testid="stMainBlockContainer"],
-section.main {{
-  opacity: 1 !important;
-  filter: none !important;
-}}
-
-/* ✅ Hide Streamlit Cloud header (fix overlap) */
-header[data-testid="stHeader"] {{
-  display: none !important;
-}}
-
-/* ✅ Allow normal page scrolling (ONE scrollbar only) */
-html, body {{
-  overflow-y: auto !important;
-  height: auto !important;
-}}
-
-.stApp {{
-  overflow: visible !important;   /* important: don't create a second scroll container */
-}}
-
-/* ✅ Fix sidebar: fixed + scrollable */
-section[data-testid="stSidebar"] {{
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  height: 100vh !important;
-  overflow-y: auto !important;
-  z-index: 9999 !important;
-}}
-
-/* Keep sidebar inner wrapper normal (avoid extra scrollbars) */
-section[data-testid="stSidebar"] > div {{
-  height: auto !important;
-  overflow: visible !important;
-}}
-
-/* ✅ Main content must shift based on sidebar state (expanded vs collapsed) */
-[data-testid="stAppViewContainer"] {{
-  padding-top: 0 !important;
-  transition: padding-left 0.2s ease;
-}}
-
-/* Expanded sidebar (normal open width) */
-section[data-testid="stSidebar"][aria-expanded="true"] ~ div [data-testid="stAppViewContainer"],
-section[data-testid="stSidebar"][aria-expanded="true"] ~ [data-testid="stAppViewContainer"] {{
-  padding-left: 21rem !important;
-}}
-
-/* Collapsed sidebar (just the arrow rail) */
-section[data-testid="stSidebar"][aria-expanded="false"] ~ div [data-testid="stAppViewContainer"],
-section[data-testid="stSidebar"][aria-expanded="false"] ~ [data-testid="stAppViewContainer"] {{
-  padding-left: 3.5rem !important;
-}}
-
-/* Fallback: if aria-expanded isn't present, default to expanded spacing */
-section[data-testid="stSidebar"]:not([aria-expanded]) ~ div [data-testid="stAppViewContainer"],
-section[data-testid="stSidebar"]:not([aria-expanded]) ~ [data-testid="stAppViewContainer"] {{
-  padding-left: 21rem !important;
-}}
-
-/* ===============================
-   ✅ SIDEBAR: fixed + fixed width
-   ✅ MAIN: always offset to match
-   =============================== */
-
-/* Pick your sidebar widths here */
-:root {{
-  --qt-sidebar-expanded: 21rem;   /* sidebar open width */
-  --qt-sidebar-collapsed: 3.5rem; /* sidebar closed rail width */
-}}
-
-/* Sidebar fixed and SAME size always when expanded */
-section[data-testid="stSidebar"] {{
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  height: 100vh !important;
-  overflow-y: auto !important;
-  z-index: 9999 !important;
-
-  width: var(--qt-sidebar-expanded) !important;
-  min-width: var(--qt-sidebar-expanded) !important;
-  max-width: var(--qt-sidebar-expanded) !important;
-}}
-
-/* When sidebar is collapsed, shrink it to the rail width */
-section[data-testid="stSidebar"][aria-expanded="false"] {{
-  width: var(--qt-sidebar-collapsed) !important;
-  min-width: var(--qt-sidebar-collapsed) !important;
-  max-width: var(--qt-sidebar-collapsed) !important;
-}}
-
-/* Keep sidebar inner wrapper from creating extra scrollbars */
-section[data-testid="stSidebar"] > div {{
-  height: auto !important;
-  overflow: visible !important;
-}}
-
-/* Main content always moves right to make room */
-[data-testid="stAppViewContainer"] {{
-  padding-top: 0 !important;
-  padding-left: var(--qt-sidebar-expanded) !important;
-  transition: padding-left 0.2s ease;
-}}
-
-/* When sidebar is collapsed, main content uses smaller offset */
-section[data-testid="stSidebar"][aria-expanded="false"] ~ div [data-testid="stAppViewContainer"],
-section[data-testid="stSidebar"][aria-expanded="false"] ~ [data-testid="stAppViewContainer"] {{
-  padding-left: var(--qt-sidebar-collapsed) !important;
 }}
 
 </style>
