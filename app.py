@@ -473,6 +473,28 @@ section.main {{
   filter: none !important;
 }}
 
+/* ✅ Fix scrolling */
+html, body {{
+  height: auto !important;
+  overflow-y: auto !important;
+}}
+.stApp {{
+  min-height: 100vh !important;
+  overflow-y: auto !important;
+}}
+[data-testid="stAppViewContainer"] {{
+  min-height: 100vh !important;
+  overflow-y: auto !important;
+}}
+
+/* ✅ Hide Streamlit Cloud header (fix overlap) */
+header[data-testid="stHeader"] {{
+  display: none !important;
+}}
+[data-testid="stAppViewContainer"] {{
+  padding-top: 0 !important;
+}}
+
 </style>
 """,
     unsafe_allow_html=True,
