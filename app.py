@@ -470,54 +470,47 @@ section.main {{
   filter: none !important;
 }}
 
-/* ✅ Fix scrolling */
-html, body {{
-  height: auto !important;
-  overflow-y: auto !important;
-}}
-.stApp {{
-  min-height: 100vh !important;
-  overflow-y: auto !important;
-}}
-[data-testid="stAppViewContainer"] {{
-  min-height: 100vh !important;
-  overflow-y: auto !important;
-}}
-
 /* ✅ Hide Streamlit Cloud header (fix overlap) */
 header[data-testid="stHeader"] {{
   display: none !important;
 }}
-[data-testid="stAppViewContainer"] {{
-  padding-top: 0 !important;
+
+/* ✅ Allow normal page scrolling (ONE scrollbar only) */
+html, body {{
+  overflow-y: auto !important;
+  height: auto !important;
 }}
 
-/* ✅ Force sidebar to stay fixed (Cloud-safe) */
+.stApp {{
+  overflow: visible !important;   /* important: don't create a second scroll container */
+}}
+
+/* ✅ Fix sidebar: make it fixed + allow sidebar scroll only if needed */
 section[data-testid="stSidebar"] {{
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
   height: 100vh !important;
-  overflow-y: auto !important;
+  overflow-y: auto !important;     /* sidebar scroll only when content is long */
   z-index: 9999 !important;
 }}
 
-/* ✅ Keep the sidebar content scrollable inside the fixed sidebar */
+/* ❌ remove the nested scrollbar creator (DO NOT add overflow here) */
 section[data-testid="stSidebar"] > div {{
-  height: 100vh !important;
-  overflow-y: auto !important;
+  height: auto !important;
+  overflow: visible !important;
 }}
 
-/* ✅ Push main content to the right so it doesn't go under the fixed sidebar
-   Streamlit exposes --sidebar-width in most versions. */
+/* ✅ Push main content to the right so it doesn't go under the fixed sidebar */
 [data-testid="stAppViewContainer"] {{
   padding-left: var(--sidebar-width) !important;
+  padding-top: 0 !important;
 }}
 
-/* Fallback if --sidebar-width isn't present for some reason */
+/* Fallback if --sidebar-width isn't defined */
 @supports not (padding-left: var(--sidebar-width)) {{
   [data-testid="stAppViewContainer"] {{
-    padding-left: 21rem !important; /* adjust if your sidebar is wider */
+    padding-left: 21rem !important;
   }}
 }}
 
