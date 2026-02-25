@@ -19,9 +19,6 @@ from typing import Optional
 st.set_page_config(page_title="Queens Trade Explorer (1474–1816)", layout="wide")
 
 
-# debug (temporary)
-st.sidebar.caption(f"Run ID: {time.time()}")
-
 
 # =========================================================
 # 1) MAP BACKGROUND (Ancient world map as app watermark)
@@ -495,16 +492,33 @@ header[data-testid="stHeader"] {{
   padding-top: 0 !important;
 }}
 
-/* Strong fallback for Streamlit sidebar wrapper */
-[data-testid="stSidebar"] {{
-  position: sticky !important;
+/* ✅ Force sidebar to stay fixed (Cloud-safe) */
+section[data-testid="stSidebar"] {{
+  position: fixed !important;
   top: 0 !important;
-  height: 100vh !important;
-}}
-
-[data-testid="stSidebarContent"] {{
+  left: 0 !important;
   height: 100vh !important;
   overflow-y: auto !important;
+  z-index: 9999 !important;
+}}
+
+/* ✅ Keep the sidebar content scrollable inside the fixed sidebar */
+section[data-testid="stSidebar"] > div {{
+  height: 100vh !important;
+  overflow-y: auto !important;
+}}
+
+/* ✅ Push main content to the right so it doesn't go under the fixed sidebar
+   Streamlit exposes --sidebar-width in most versions. */
+[data-testid="stAppViewContainer"] {{
+  padding-left: var(--sidebar-width) !important;
+}}
+
+/* Fallback if --sidebar-width isn't present for some reason */
+@supports not (padding-left: var(--sidebar-width)) {{
+  [data-testid="stAppViewContainer"] {{
+    padding-left: 21rem !important; /* adjust if your sidebar is wider */
+  }}
 }}
 
 </style>
