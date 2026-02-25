@@ -9,6 +9,8 @@ import io
 import base64
 from typing import Optional
 
+st.sidebar.caption(f"Run ID: {time.time()}")
+
 
 # =========================================================
 # 0) PAGE CONFIG (must be the first Streamlit command)
