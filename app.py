@@ -124,10 +124,7 @@ section[data-testid="stSidebar"] {{
     padding: 0.8rem 1rem !important;
 
     /* sticky instead of fixed */
-    position: sticky !important;
-    top: 0 !important;
-    height: 100vh !important;
-    overflow-y: auto !important;
+    position: relative !important;
     z-index: 20;
 }}
 
@@ -196,6 +193,14 @@ section[data-testid="stSidebar"] div[data-testid="stRadio"] {{
   border: 1px solid rgba(120,90,40,0.18);
   border-radius: 12px;
   padding: 10px 12px 8px 12px;
+}}
+
+/* ✅ Sidebar stays visible while scrolling, without breaking Streamlit layout */
+section[data-testid="stSidebar"] > div {{
+  position: sticky !important;
+  top: 0 !important;
+  height: 100vh !important;
+  overflow-y: auto !important;
 }}
 
 /* ------------------------------
