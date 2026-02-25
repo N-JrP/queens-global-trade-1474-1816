@@ -49,7 +49,6 @@ if not MAP_URI:
 
 # =========================================================
 # 2) THEME: Medieval Manuscript / Parchment UI (with map)
-#    IMPORTANT: map/veil are behind content via NEGATIVE z-index
 # =========================================================
 st.markdown(
     f"""
@@ -60,7 +59,6 @@ st.markdown(
 .stApp {{
     background: linear-gradient(180deg, #f6f0dc 0%, #f3e8c8 100%);
     font-family: "Playfair Display", Georgia, serif;
-    position: relative; /* important for layering */
 }}
 
 /* Map layer (BEHIND UI) */
@@ -69,14 +67,14 @@ st.markdown(
     position: fixed;
     inset: 0;
     pointer-events: none;
-    z-index: -2;
+    z-index: 0;
 
     background-image: url("{MAP_URI if MAP_URI else ""}");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 
-    opacity: 0.18;  /* ↓ reduced so text doesn’t look faded */
+    opacity: 0.38;
     filter: sepia(0.55) contrast(1.05) saturate(0.85);
 }}
 
@@ -86,34 +84,38 @@ st.markdown(
     position: fixed;
     inset: 0;
     pointer-events: none;
-    z-index: -1;
+    z-index: 1;
 
     background: linear-gradient(
         180deg,
-        rgba(246,240,220,0.65),
-        rgba(243,232,200,0.80)
+        rgba(246,240,220,0.68),
+        rgba(243,232,200,0.88)
     );
 }}
 
-/* Ensure main UI is ABOVE background layers */
-.main .block-container {{
+/* Ensure app content is ABOVE background layers */
+[data-testid="stAppViewContainer"] {{
     position: relative;
     z-index: 5;
 }}
-section[data-testid="stSidebar"] {{
-    position: relative;
-    z-index: 10;
+
+/* ✅ Hide Streamlit Cloud header (fix overlap) */
+header[data-testid="stHeader"] {{
+  display: none !important;
 }}
 
-/* ---- Main content panel (THIS fixes the “too light” issue) ---- */
+/* ✅ One scrollbar only */
+html, body {{
+  overflow-y: auto !important;
+  height: auto !important;
+}}
+
+/* ---- Antique border frame ---- */
 .block-container {{
     padding-top: 1.2rem;
     border: 1px solid rgba(120, 90, 40, 0.25);
     border-radius: 16px;
-
-    /* was 0.15 (too transparent) -> make it parchment-solid */
-    background: rgba(244, 236, 216, 0.78);
-
+    background: rgba(255, 255, 255, 0.15);
     box-shadow: 0 8px 20px rgba(120, 90, 40, 0.12);
     margin-top: 10px;
     margin-left: 4px;
@@ -266,6 +268,30 @@ section[data-testid="stSidebar"] button:hover {{
     background: #e6d7b2;
 }}
 
+/* ✅ Center ONLY the "Clear the Council" button */
+section[data-testid="stSidebar"] div.stButton > button {{
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 260px;
+}}
+
+/* ✅ Sidebar widgets full width */
+section[data-testid="stSidebar"] .stTextInput,
+section[data-testid="stSidebar"] .stSelectbox,
+section[data-testid="stSidebar"] .stTextArea,
+section[data-testid="stSidebar"] .stButton {{
+  width: 100%;
+}}
+
+/* ✅ Radio in a card */
+section[data-testid="stSidebar"] div[data-testid="stRadio"]{{
+  background: rgba(244,236,216,0.40);
+  border: 1px solid rgba(120,90,40,0.18);
+  border-radius: 12px;
+  padding: 10px 12px 8px 12px;
+}}
+
 /* ---- Manuscript Section Header ---- */
 .manuscript-header {{
     display:flex;
@@ -370,35 +396,59 @@ section[data-testid="stSidebar"] button:hover {{
   color: rgba(75,59,43,0.75);
 }}
 
-/* ---- Queen dossier panel ---- */
-.dossier {{
-  background: rgba(244,236,216,0.55);
-  border: 1px solid rgba(120,90,40,0.22);
-  border-radius: 14px;
-  padding: 12px 14px;
-  box-shadow: 0 5px 12px rgba(120,90,40,0.10);
+/* If any container is accidentally dimmed on Cloud, undo it */
+.stApp,
+[data-testid="stAppViewContainer"],
+[data-testid="stMain"],
+[data-testid="stMainBlockContainer"],
+section.main {{
+  opacity: 1 !important;
+  filter: none !important;
 }}
-.dossier .row {{ margin: 6px 0; }}
-.dossier .k {{ font-weight: 800; color: #4a381d; }}
-.dossier .v {{ color: #3e321f; white-space: normal; line-height: 1.5; }}
 
-/* ---- Compare panels (3-column fill) ---- */
-.compare-panel {{
-  background: rgba(244,236,216,0.55);
-  border: 1px solid rgba(120,90,40,0.22);
-  border-radius: 14px;
-  padding: 12px 14px;
-  box-shadow: 0 5px 12px rgba(120,90,40,0.08);
-  min-height: 140px;
+/* =========================================================
+   ✅ LAYOUT FIX (ONLY THIS PART affects sidebar expand/collapse)
+   - Sidebar stays fixed
+   - Main content shifts with sidebar open/close
+   - No overlap, no empty gap
+   ========================================================= */
+
+:root {{
+  --qt-sidebar-expanded: 21rem;
+  --qt-sidebar-collapsed: 3.5rem;
 }}
-.compare-panel .title {{
-  font-weight: 900;
-  color: #4a381d;
-  letter-spacing: 0.3px;
-  margin-bottom: 8px;
+
+/* Sidebar fixed */
+section[data-testid="stSidebar"] {{
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  height: 100vh !important;
+  overflow-y: auto !important;
+  z-index: 9999 !important;
+
+  width: var(--qt-sidebar-expanded) !important;
+  min-width: var(--qt-sidebar-expanded) !important;
+  max-width: var(--qt-sidebar-expanded) !important;
 }}
-.compare-panel ul {{ margin: 0 0 0 18px; padding: 0; }}
-.compare-panel li {{ margin: 6px 0; line-height: 1.45; }}
+
+/* Collapsed sidebar width */
+section[data-testid="stSidebar"][aria-expanded="false"] {{
+  width: var(--qt-sidebar-collapsed) !important;
+  min-width: var(--qt-sidebar-collapsed) !important;
+  max-width: var(--qt-sidebar-collapsed) !important;
+}}
+
+/* Main area shifts right */
+[data-testid="stMain"] {{
+  margin-left: var(--qt-sidebar-expanded) !important;
+  transition: margin-left 0.2s ease;
+}}
+
+/* Main shifts back when sidebar collapsed */
+section[data-testid="stSidebar"][aria-expanded="false"] ~ [data-testid="stMain"] {{
+  margin-left: var(--qt-sidebar-collapsed) !important;
+}}
 
 </style>
 """,
