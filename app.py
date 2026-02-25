@@ -944,20 +944,25 @@ with col2:
         left, right = st.columns([1.25, 1], gap="large")
 
         with left:
-            dossier_html = f"""<div class="dossier">
-<div class="row"><span class="k">Empire:</span> <span class="v">{q.get('empire','')}</span></div>
-<div class="row"><span class="k">Capital:</span> <span class="v">{q.get('capital','')}</span></div>
-<div class="row"><span class="k">Trade Regions:</span> <span class="v">{q.get('major_trade_regions','')}</span></div>
-<div class="row"><span class="k">Key Ports:</span> <span class="v">{q.get('key_ports','')}</span></div>
-<div class="row"><span class="k">Key Exports:</span> <span class="v">{q.get('key_exports','')}</span></div>
-<div class="row"><span class="k">Trade Partners:</span> <span class="v">{q.get('trade_partners','')}</span></div>
-<div class="row"><span class="k">Policy Keywords:</span> <span class="v">{q.get('trade_policy_keywords','')}</span></div>
+            # ✅ Wrap dossier inside parchment-card (so it matches your boxed style)
+            dossier_html = f"""
+<div class="parchment-card">
+  <div class="dossier" style="background: transparent; border: 0; box-shadow: none; padding: 0;">
+    <div class="row"><span class="k">Empire:</span> <span class="v">{q.get('empire','')}</span></div>
+    <div class="row"><span class="k">Capital:</span> <span class="v">{q.get('capital','')}</span></div>
+    <div class="row"><span class="k">Trade Regions:</span> <span class="v">{q.get('major_trade_regions','')}</span></div>
+    <div class="row"><span class="k">Key Ports:</span> <span class="v">{q.get('key_ports','')}</span></div>
+    <div class="row"><span class="k">Key Exports:</span> <span class="v">{q.get('key_exports','')}</span></div>
+    <div class="row"><span class="k">Trade Partners:</span> <span class="v">{q.get('trade_partners','')}</span></div>
+    <div class="row"><span class="k">Policy Keywords:</span> <span class="v">{q.get('trade_policy_keywords','')}</span></div>
 
-<hr style="border:0; border-top:1px solid rgba(120,90,40,0.25); margin:10px 0;">
+    <hr style="border:0; border-top:1px solid rgba(120,90,40,0.25); margin:10px 0;">
 
-<div class="row"><span class="k">Economic Impact:</span></div>
-<div class="row"><span class="v">{q.get('economic_impact_summary','')}</span></div>
-</div>"""
+    <div class="row"><span class="k">Economic Impact:</span></div>
+    <div class="row"><span class="v">{q.get('economic_impact_summary','')}</span></div>
+  </div>
+</div>
+"""
             st.markdown(dossier_html, unsafe_allow_html=True)
 
             if display_mode == "Evidence Mode":
