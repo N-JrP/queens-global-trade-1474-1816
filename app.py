@@ -948,14 +948,14 @@ with col2:
             dossier_html = f"""
 <div class="parchment-card">
   <div class="dossier" style="background: transparent; border: 0; box-shadow: none; padding: 0;">
-    <div class="row"><span class="k">Empire:</span> <span class="v">{q.get('empire','')}</span></div>
-    <div class="row"><span class="k">Capital:</span> <span class="v">{q.get('capital','')}</span></div>
-    <div class="row"><span class="k">Trade Regions:</span> <span class="v">{q.get('major_trade_regions','')}</span></div>
-    <div class="row"><span class="k">Key Ports:</span> <span class="v">{q.get('key_ports','')}</span></div>
-    <div class="row"><span class="k">Key Exports:</span> <span class="v">{q.get('key_exports','')}</span></div>
-    <div class="row"><span class="k">Trade Partners:</span> <span class="v">{q.get('trade_partners','')}</span></div>
-    <div class="row"><span class="k">Policy Keywords:</span> <span class="v">{q.get('trade_policy_keywords','')}</span></div>
-    <div class="row"><span class="k">Economic Impact:</span> <span class="v">{q.get('economic_impact_summary','')}</span></div>
+    <div class="row"><span class="k"><strong>Empire:</strong></span> <span class="v">{q.get('empire','')}</span></div>
+    <div class="row"><span class="k"><strong>Capital:</strong></span> <span class="v">{q.get('capital','')}</span></div>
+    <div class="row"><span class="k"><strong>Trade Regions:</strong></span> <span class="v">{q.get('major_trade_regions','')}</span></div>
+    <div class="row"><span class="k"><strong>Key Ports:</strong></span> <span class="v">{q.get('key_ports','')}</span></div>
+    <div class="row"><span class="k"><strong>Key Exports:</strong></span> <span class="v">{q.get('key_exports','')}</span></div>
+    <div class="row"><span class="k"><strong>Trade Partners:</strong></span> <span class="v">{q.get('trade_partners','')}</span></div>
+    <div class="row"><span class="k"><strong>Policy Keywords:</strong></span> <span class="v">{q.get('trade_policy_keywords','')}</span></div>
+    <div class="row"><span class="k"><strong>Economic Impact:</strong></span> <span class="v">{q.get('economic_impact_summary','')}</span></div>
   </div>
 </div>
 """
