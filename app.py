@@ -525,6 +525,57 @@ section[data-testid="stSidebar"]:not([aria-expanded]) ~ [data-testid="stAppViewC
   padding-left: 21rem !important;
 }}
 
+/* ===============================
+   ✅ SIDEBAR: fixed + fixed width
+   ✅ MAIN: always offset to match
+   =============================== */
+
+/* Pick your sidebar widths here */
+:root {{
+  --qt-sidebar-expanded: 21rem;   /* sidebar open width */
+  --qt-sidebar-collapsed: 3.5rem; /* sidebar closed rail width */
+}}
+
+/* Sidebar fixed and SAME size always when expanded */
+section[data-testid="stSidebar"] {{
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  height: 100vh !important;
+  overflow-y: auto !important;
+  z-index: 9999 !important;
+
+  width: var(--qt-sidebar-expanded) !important;
+  min-width: var(--qt-sidebar-expanded) !important;
+  max-width: var(--qt-sidebar-expanded) !important;
+}}
+
+/* When sidebar is collapsed, shrink it to the rail width */
+section[data-testid="stSidebar"][aria-expanded="false"] {{
+  width: var(--qt-sidebar-collapsed) !important;
+  min-width: var(--qt-sidebar-collapsed) !important;
+  max-width: var(--qt-sidebar-collapsed) !important;
+}}
+
+/* Keep sidebar inner wrapper from creating extra scrollbars */
+section[data-testid="stSidebar"] > div {{
+  height: auto !important;
+  overflow: visible !important;
+}}
+
+/* Main content always moves right to make room */
+[data-testid="stAppViewContainer"] {{
+  padding-top: 0 !important;
+  padding-left: var(--qt-sidebar-expanded) !important;
+  transition: padding-left 0.2s ease;
+}}
+
+/* When sidebar is collapsed, main content uses smaller offset */
+section[data-testid="stSidebar"][aria-expanded="false"] ~ div [data-testid="stAppViewContainer"],
+section[data-testid="stSidebar"][aria-expanded="false"] ~ [data-testid="stAppViewContainer"] {{
+  padding-left: var(--qt-sidebar-collapsed) !important;
+}}
+
 </style>
 """,
     unsafe_allow_html=True,
