@@ -1,5 +1,7 @@
 # 👑 Queens Global Trade Explorer (1474–1816)
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Streamlit-ff4b4b?logo=streamlit&logoColor=white)](https://queens-global-trade-1474-1816-mrfblbggqimo7dow5urzgo.streamlit.app/)
+
 **Early Modern Global Trade Governance (15th–19th century)**  
 A digital humanities prototype combining structured historical data, interactive filtering, and governance-overlap visualization.
 
