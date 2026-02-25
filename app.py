@@ -439,10 +439,25 @@ section[data-testid="stSidebar"][aria-expanded="false"] {{
   max-width: var(--qt-sidebar-collapsed) !important;
 }}
 
-/* Main area shifts right */
+/* ✅ Make ONLY the right/main side scroll (sidebar stays fixed) */
 [data-testid="stMain"] {{
   margin-left: var(--qt-sidebar-expanded) !important;
   transition: margin-left 0.2s ease;
+
+  height: 100vh !important;
+  overflow-y: auto !important;
+}}
+
+/* Hide the extra scrollbar on the page itself (so only main scrolls) */
+html, body {{
+  height: 100vh !important;
+  overflow: hidden !important;
+}}
+
+/* Streamlit wrapper: don’t create another scroll container */
+[data-testid="stAppViewContainer"] {{
+  height: 100vh !important;
+  overflow: hidden !important;
 }}
 
 /* Main shifts back when sidebar collapsed */
