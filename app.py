@@ -97,10 +97,10 @@ st.markdown(
     );
 }}
 
-/* Ensure main UI is ABOVE background layers */
-.main .block-container {{
+/* Ensure entire app content is above background layers */
+[data-testid="stAppViewContainer"] {{
     position: relative;
-    z-index: 10;
+    z-index: 5;
 }}
 section[data-testid="stSidebar"] {{
     position: relative;
